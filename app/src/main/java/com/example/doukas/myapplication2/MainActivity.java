@@ -16,7 +16,9 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
 
 
 /**
@@ -54,12 +56,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    client = new Socket("192.168.1.6", port);
+
+                    client=new Socket();
+                    SocketAddress server = new InetSocketAddress("192.168.1.6",port);
+                    client.connect(server);
                     printWriter = new PrintWriter(client.getOutputStream(),true);
                     sw1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            changeStatus(stat1);
+                            //changeStatus(stat1);
                             printWriter.println("Switch 1 is "+stat1.getText());
                             printWriter.flush();
                         }
@@ -67,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     sw2.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            changeStatus(stat2);
+                            //changeStatus(stat2);
                             printWriter.println("Switch 2 is "+stat2.getText());
                             printWriter.flush();
                         }
@@ -149,5 +154,5 @@ public class MainActivity extends AppCompatActivity {
 
 
         circularReveal.start();
-        }
     }
+}

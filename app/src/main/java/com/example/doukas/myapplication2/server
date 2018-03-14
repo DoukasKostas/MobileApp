@@ -1,0 +1,44 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package testserver;
+
+import java.net.*;
+import java.io.*;
+import java.util.*;
+
+/**
+ *
+ * @author Doukas
+ */
+public class TestServer {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) throws IOException {
+
+        try (ServerSocket serverSocket = new ServerSocket(4444);
+             Socket clientSocket = serverSocket.accept();
+
+            ) {
+            Scanner clientIn = new Scanner(clientSocket.getInputStream());
+            System.out.println("Server started");
+            String state;
+
+            do{
+                state=clientIn.nextLine();
+                System.out.println(state);
+            }while(true);
+
+        }
+        catch (IOException e)  {
+            System.err.println(e);
+            System.exit(1);
+        }
+
+
+    }
+}
