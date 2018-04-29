@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private Button sw2;
     private TextView stat1;
     private TextView stat2;
-    private int port = 4444;
+    private int port = 8888;
     private Socket client;
     private PrintWriter printWriter;
 
@@ -58,23 +58,31 @@ public class MainActivity extends AppCompatActivity {
                 try {
 
                     client=new Socket();
-                    SocketAddress server = new InetSocketAddress("192.168.1.6",port);
+                    SocketAddress server = new InetSocketAddress("192.168.1.9",port);
                     client.connect(server);
                     printWriter = new PrintWriter(client.getOutputStream(),true);
                     sw1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            //changeStatus(stat1);
-                            printWriter.println("Switch 1 is "+stat1.getText());
-                            printWriter.flush();
+                            new Thread(new Runnable() {
+                                public void run() {
+                                    printWriter.println("1");
+                                    printWriter.flush();
+                                }
+                            }).start();
+                            changeStatus(stat1);
                         }
                     });
                     sw2.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            //changeStatus(stat2);
-                            printWriter.println("Switch 2 is "+stat2.getText());
-                            printWriter.flush();
+                            new Thread(new Runnable() {
+                                public void run() {
+                                    printWriter.println("2");
+                                    printWriter.flush();
+                                }
+                            }).start();
+                            changeStatus(stat2);
                         }
                     });
                 }
