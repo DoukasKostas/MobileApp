@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Priza 1"
+            android:text="@string/priza_1"
             android:textSize="25sp"/>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -23,14 +23,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Status:"
+                android:text="@string/status"
                 android:textSize="20sp"/>
 
             <TextView
                 android:id="@+id/status1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="On"
+                android:text="@string/on"
                 android:background="#4CAF50"
                 android:textSize="20sp"/>
 
@@ -40,12 +40,12 @@
             android:id="@+id/switch1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Switch"/>
+            android:text="@string/switchLb"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Priza 2"
+            android:text="@string/priza_2"
             android:textSize="25sp"/>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -54,14 +54,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Status:"
+                android:text="@string/status"
                 android:textSize="20sp"/>
 
             <TextView
                 android:id="@+id/status2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Off"
+                android:text="@string/off"
                 android:background="#F44336"
                 android:textSize="20sp"/>
 
@@ -71,7 +71,69 @@
             android:id="@+id/switch2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Switch"/>
+            android:text="@string/switchLb"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/priza_3"
+            android:textSize="25sp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FF6F00">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/status"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/status3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/on"
+                android:background="#4CAF50"
+                android:textSize="20sp"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/switch3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/switchLb"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/priza_4"
+            android:textSize="25sp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FF6F00">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/status"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/status4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/on"
+                android:background="#4CAF50"
+                android:textSize="20sp"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/switch4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/switchLb"/>
 
 
     </LinearLayout>

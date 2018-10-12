@@ -35,8 +35,12 @@ public class MainActivity extends AppCompatActivity {
     private int revealY;
     private Button sw1;
     private Button sw2;
+    private Button sw3;
+    private Button sw4;
     private TextView stat1;
     private TextView stat2;
+    private TextView stat3;
+    private TextView stat4;
     private int port = 8888;
     private Socket client;
     private PrintWriter printWriter;
@@ -51,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
         sw2=findViewById(R.id.switch2);
         stat1=findViewById(R.id.status1);
         stat2=findViewById(R.id.status2);
+        sw3=findViewById(R.id.switch3);
+        sw3=findViewById(R.id.switch3);
+        stat4=findViewById(R.id.status4);
+        stat4=findViewById(R.id.status4);
 
         new Thread(new Runnable() {
             @Override
@@ -58,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
 
                     client=new Socket();
-                    SocketAddress server = new InetSocketAddress("192.168.1.9",port);
+                    SocketAddress server = new InetSocketAddress("192.168.1.120",port);
                     client.connect(server);
                     printWriter = new PrintWriter(client.getOutputStream(),true);
                     sw1.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                                     printWriter.flush();
                                 }
                             }).start();
+
                             changeStatus(stat1);
                         }
                     });
@@ -83,6 +92,30 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }).start();
                             changeStatus(stat2);
+                        }
+                    });
+                    sw3.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            new Thread(new Runnable() {
+                                public void run() {
+                                    printWriter.println("3");
+                                    printWriter.flush();
+                                }
+                            }).start();
+                            changeStatus(stat3);
+                        }
+                    });
+                    sw4.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            new Thread(new Runnable() {
+                                public void run() {
+                                    printWriter.println("4");
+                                    printWriter.flush();
+                                }
+                            }).start();
+                            changeStatus(stat4);
                         }
                     });
                 }

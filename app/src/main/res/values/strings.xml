@@ -1,4 +1,20 @@
 <resources>
     <string name="app_name">My Application2</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Set Mail</string>
+    <string name="priza_1">Priza 1</string>
+    <string name="status">Status:</string>
+    <string name="on">On</string>
+    <string name="switchLb">Switch</string>
+    <string name="priza_2">Priza 2</string>
+    <string name="off">Off</string>
+    <string name="priza_4">Priza 4</string>
+    <string name="set_email">Set Email</string>
+    <string name="email">Email</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="priza_3">Priza 3</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="ip_address">Ip Address</string>
+    <string name="smarttapanda">SmartTaPanda</string>
 </resources>
