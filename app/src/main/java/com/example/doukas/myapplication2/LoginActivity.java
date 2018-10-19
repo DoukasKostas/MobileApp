@@ -17,6 +17,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -37,38 +40,46 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkFirstRun();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());//get prefs
+        String myIp = prefs.getString("MYIPADDRESS", "defaultStringIfNothingFound");//get prefs
         setContentView(R.layout.activity_login);
         Toolbar toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ipaddress=findViewById(R.id.ipaddressfield);
+        ipaddress.setText(myIp);
         password=findViewById(R.id.passwordfield);
         loginbtn=findViewById(R.id.loginbtn);
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 String ip=ipaddress.getText().toString();
-                SharedPreferences.Editor prefEditor = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit();//edit prefs
+                SharedPreferences.Editor prefEditor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();//edit prefs
                 prefEditor.putString("MYIPADDRESS", ip);//edit prefs
                 prefEditor.apply();//edit prefs
-                new Thread(new Runnable() {
+                /*new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
 
                             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);//get prefs
                             String myIp = prefs.getString("MYIPADDRESS", "defaultStringIfNothingFound");
-                            /*client=new Socket();
+                            client=new Socket();
                             SocketAddress server = new InetSocketAddress(myIp,port);
                             client.connect(server);
-                            printWriter = new PrintWriter(client.getOutputStream(),true);
-                            printWriter.println("OK");
-                            printWriter.flush();*/
+                            BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                            String message = null;
+                            try {
+                                message = in.readLine();
+                                if(message=="Connected")presentActivity(view);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                         catch (Exception e){
                             e.printStackTrace();
                         }
                     }
-                }).start();
+                }).start();*/
                 presentActivity(view);
             }
         });
@@ -103,9 +114,9 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(MainActivity.EXTRA_CIRCULAR_REVEAL_X, revealX);
         intent.putExtra(MainActivity.EXTRA_CIRCULAR_REVEAL_Y, revealY);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);//get prefs
-        String myEmail = prefs.getString("MYEMAIL", "defaultStringIfNothingFound");//get prefs
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());//get prefs
         String myIp = prefs.getString("MYIPADDRESS", "defaultStringIfNothingFound");//get prefs
+        String myEmail = prefs.getString("MYEMAIL", "defaultStringIfNothingFound");//get prefs
         Toast.makeText(LoginActivity.this,myEmail+" connected to:"+myIp
                 , Toast.LENGTH_LONG).show();//gia debug
 
@@ -125,6 +136,9 @@ public class LoginActivity extends AppCompatActivity {
                     .edit()
                     .putBoolean("isFirstRun", false)
                     .apply();
+            SharedPreferences.Editor prefEditor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+            prefEditor.putString("MYIPADDRESS", "192.168.1.120");//set local ip
+            prefEditor.apply();//edit prefs
         }
     }
 
@@ -152,12 +166,12 @@ public class LoginActivity extends AppCompatActivity {
                 EditText edit= dialog.findViewById(R.id.email_input);
                 String e=edit.getText().toString();
                 if (!isEmailValid(e)){
-                    Toast toast = Toast.makeText(LoginActivity.this,"Email is invalid!!", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getApplicationContext(),"Email is invalid!!", Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
                 }
                 else{
-                    SharedPreferences.Editor prefEditor = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit();//edit prefs
+                    SharedPreferences.Editor prefEditor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();//edit prefs
                     e="Email:"+e;
                     prefEditor.putString("MYEMAIL", e);//edit prefs
                     prefEditor.apply();//edit prefs
@@ -165,13 +179,13 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             try {
-                                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);//get prefs
+                                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());//get prefs
                                 String myEmail = prefs.getString("MYEMAIL", "defaultStringIfNothingFound");
                                 client=new Socket();
                                 SocketAddress server = new InetSocketAddress("192.168.1.120",port);
                                 client.connect(server);
                                 printWriter = new PrintWriter(client.getOutputStream(),true);
-                                printWriter.println(myEmail);
+                                printWriter.print(myEmail);
                                 printWriter.flush();
                             }
                             catch (Exception e){
