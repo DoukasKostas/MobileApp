@@ -37,7 +37,12 @@
             android:id="@+id/ipaddressfield"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/ip_address"/>
+            android:inputType="number"
+            android:nextFocusForward="@+id/passwordfield"
+            android:hint="@string/ip_address"
+            android:digits="0123456789."
+            android:selectAllOnFocus="true"
+            android:singleLine="true" />
 
         <EditText
             android:id="@+id/passwordfield"

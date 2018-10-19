@@ -3,8 +3,11 @@ package com.example.doukas.myapplication2;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -14,11 +17,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 
 /**
@@ -37,13 +44,11 @@ public class MainActivity extends AppCompatActivity {
     private Button sw2;
     private Button sw3;
     private Button sw4;
-    private TextView stat1;
-    private TextView stat2;
-    private TextView stat3;
-    private TextView stat4;
+    private TextView[] stat=new TextView[4];
     private int port = 8888;
     private Socket client;
     private PrintWriter printWriter;
+    private BufferedReader in;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,71 +58,117 @@ public class MainActivity extends AppCompatActivity {
 
         sw1=findViewById(R.id.switch1);
         sw2=findViewById(R.id.switch2);
-        stat1=findViewById(R.id.status1);
-        stat2=findViewById(R.id.status2);
         sw3=findViewById(R.id.switch3);
-        sw3=findViewById(R.id.switch3);
-        stat4=findViewById(R.id.status4);
-        stat4=findViewById(R.id.status4);
+        sw4=findViewById(R.id.switch4);
+        stat[0]=findViewById(R.id.status1);
+        stat[1]=findViewById(R.id.status2);
+        stat[2]=findViewById(R.id.status3);
+        stat[3]=findViewById(R.id.status4);
+
+
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
 
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());//get prefs
+                    String myIp = prefs.getString("MYIPADDRESS", "defaultStringIfNothingFound");
                     client=new Socket();
-                    SocketAddress server = new InetSocketAddress("192.168.1.120",port);
+                    SocketAddress server = new InetSocketAddress(myIp,port);
                     client.connect(server);
+
+                    in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                    System.out.println("Message Received: " + in.readLine());
+                    changeStatus(stat,in.readLine());
                     printWriter = new PrintWriter(client.getOutputStream(),true);
                     sw1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            new Thread(new Runnable() {
+                            /*new Thread(new Runnable() {
                                 public void run() {
-                                    printWriter.println("1");
+                                    printWriter.print("Switch:1");
                                     printWriter.flush();
-                                }
-                            }).start();
+                                    String message = null;
+                                    try {
+                                        message = in.readLine();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    System.out.println("Message Received: " + message);
 
-                            changeStatus(stat1);
+                                }
+                            }).start();*/
+                            //btnThread btn1=new btnThread();
+                            //btn1.start();
+
+                            btnPress btn1= new btnPress();
+                            btn1.executeOnExecutor(Executors.newSingleThreadExecutor(),"1");
+                            //changeStatus(stat1);
                         }
                     });
                     sw2.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            new Thread(new Runnable() {
+                            /*new Thread(new Runnable() {
                                 public void run() {
-                                    printWriter.println("2");
+                                    printWriter.print("Switch:2");
                                     printWriter.flush();
+                                    try {
+                                        System.out.println(in.readLine());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+
                                 }
-                            }).start();
-                            changeStatus(stat2);
+                            }).start();*/
+                            btnPress btn2= new btnPress();
+                            btn2.executeOnExecutor(Executors.newSingleThreadExecutor(),"2");
+                         //   changeStatus(stat2);
                         }
                     });
                     sw3.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            new Thread(new Runnable() {
+                            /*new Thread(new Runnable() {
                                 public void run() {
-                                    printWriter.println("3");
+                                    printWriter.print("Switch:3");
                                     printWriter.flush();
+                                    try {
+                                        System.out.println(in.readLine());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+
                                 }
-                            }).start();
-                            changeStatus(stat3);
+
+                            }).start();*/
+                            btnPress btn3= new btnPress();
+                            btn3.executeOnExecutor(Executors.newSingleThreadExecutor(),"3");
+                           // changeStatus(stat3);
                         }
                     });
                     sw4.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            new Thread(new Runnable() {
+                            /*new Thread(new Runnable() {
                                 public void run() {
-                                    printWriter.println("4");
+                                    printWriter.print("Switch:4");
                                     printWriter.flush();
+                                    try {
+                                        System.out.println(in.readLine());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+
                                 }
-                            }).start();
-                            changeStatus(stat4);
+                            }).start();*/
+                            btnPress btn4= new btnPress();
+                            btn4.executeOnExecutor(Executors.newSingleThreadExecutor(),"4");
+                            //changeStatus(stat4);
                         }
                     });
+
                 }
                 catch (Exception e){
                     e.printStackTrace();
@@ -151,16 +202,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void changeStatus(TextView v){
-        String status=v.getText().toString();
-        if(status.equals("On")){
-            v.setBackgroundColor(Color.parseColor("#F44336"));
-            v.setText("Off");
+    private void changeStatus(TextView[] v,String m){
+        char[] mArray = m.toCharArray();
+        for (int i=0;i<v.length;i++){
+            if(mArray[i] == '0'){
+                v[i].setBackgroundColor(Color.parseColor("#F44336"));
+                v[i].setText("Off");
+            }
+            else{
+                v[i].setBackgroundColor(Color.parseColor("#4CAF50"));
+                v[i].setText("On");
+            }
         }
-        else{
-            v.setBackgroundColor(Color.parseColor("#4CAF50"));
-            v.setText("On");
-        }
+
     }
 
     protected void revealActivity(int x, int y) {
@@ -196,4 +250,44 @@ public class MainActivity extends AppCompatActivity {
 
         circularReveal.start();
     }
+
+    public class btnPress extends AsyncTask <String,Void,String>{
+
+        @Override
+        protected void onPreExecute() {
+
+            //super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(String... args) {
+            printWriter.print("Switch:"+args[0]);
+            printWriter.flush();
+            String message = null;
+            try {
+                in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                message = in.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return message;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            System.out.println("Message Received: " + s);
+            changeStatus(stat,s);
+            try {
+                super.finalize();
+                this.cancel(true);
+
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        }
+    }
+
+
 }
