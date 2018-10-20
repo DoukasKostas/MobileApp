@@ -25,6 +25,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
@@ -101,9 +102,10 @@ public class MainActivity extends AppCompatActivity {
                             }).start();*/
                             //btnThread btn1=new btnThread();
                             //btn1.start();
-
                             btnPress btn1= new btnPress();
-                            btn1.executeOnExecutor(Executors.newSingleThreadExecutor(),"1");
+                            ExecutorService ex = Executors.newSingleThreadExecutor();
+                            btn1.executeOnExecutor(ex,"1");
+                            ex.shutdown();
                             //changeStatus(stat1);
                         }
                     });
@@ -123,7 +125,9 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }).start();*/
                             btnPress btn2= new btnPress();
-                            btn2.executeOnExecutor(Executors.newSingleThreadExecutor(),"2");
+                            ExecutorService ex = Executors.newSingleThreadExecutor();
+                            btn2.executeOnExecutor(ex,"2");
+                            ex.shutdown();
                          //   changeStatus(stat2);
                         }
                     });
@@ -144,7 +148,9 @@ public class MainActivity extends AppCompatActivity {
 
                             }).start();*/
                             btnPress btn3= new btnPress();
-                            btn3.executeOnExecutor(Executors.newSingleThreadExecutor(),"3");
+                            ExecutorService ex = Executors.newSingleThreadExecutor();
+                            btn3.executeOnExecutor(ex,"3");
+                            ex.shutdown();
                            // changeStatus(stat3);
                         }
                     });
@@ -164,17 +170,38 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }).start();*/
                             btnPress btn4= new btnPress();
-                            btn4.executeOnExecutor(Executors.newSingleThreadExecutor(),"4");
+                            ExecutorService ex = Executors.newSingleThreadExecutor();
+                            btn4.executeOnExecutor(ex,"4");
+                            ex.shutdown();
                             //changeStatus(stat4);
                         }
                     });
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            while (client.isConnected()) {
+                                try {
+                                    final String s=in.readLine();
+                                    System.out.println("printed in continious thread"+s);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            changeStatus(stat, s);
+                                        }
+                                    });
 
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    },"RefreshThread").start();
                 }
                 catch (Exception e){
                     e.printStackTrace();
                 }
             }
-        }).start();
+        },"ConnThread").start();
 
 
 
