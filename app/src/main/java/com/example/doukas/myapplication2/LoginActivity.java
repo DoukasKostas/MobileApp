@@ -1,8 +1,12 @@
 package com.example.doukas.myapplication2;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
@@ -13,8 +17,11 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -49,6 +56,10 @@ public class LoginActivity extends AppCompatActivity {
         ipaddress.setText(myIp);
         password=findViewById(R.id.passwordfield);
         loginbtn=findViewById(R.id.loginbtn);
+//        TextView logo = (TextView) findViewById(R.id.logoStroke);
+//        logo.getPaint().setStrokeWidth(20);
+//        logo.getPaint().setStyle(Paint.Style.STROKE);
+
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -80,7 +91,11 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 }).start();*/
-                presentActivity(view);
+                if(isNetworkConnected())
+                    presentActivity(view);
+                else
+                    Toast.makeText(LoginActivity.this, "No Connection. Open wifi or data to connect",
+                            Toast.LENGTH_LONG).show();
             }
         });
 
@@ -117,8 +132,8 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());//get prefs
         String myIp = prefs.getString("MYIPADDRESS", "defaultStringIfNothingFound");//get prefs
         String myEmail = prefs.getString("MYEMAIL", "defaultStringIfNothingFound");//get prefs
-        Toast.makeText(LoginActivity.this,myEmail+" connected to:"+myIp
-                , Toast.LENGTH_LONG).show();//gia debug
+        //Toast.makeText(LoginActivity.this,myEmail+" connected to:"+myIp
+        //        , Toast.LENGTH_LONG).show();//gia debug
 
         ActivityCompat.startActivity(this, intent, options.toBundle());
     }
@@ -206,5 +221,10 @@ public class LoginActivity extends AppCompatActivity {
         });
         dialog.show();
 
+    }
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null;
     }
 }

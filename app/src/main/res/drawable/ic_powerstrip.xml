@@ -1,0 +1,17 @@
+<vector android:height="24dp" android:viewportHeight="353.801"
+    android:viewportWidth="100.613" android:width="24dp"
+    xmlns:aapt="http://schemas.android.com/aapt" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#bdbfc1" android:pathData="M20,1L79.58,1A18,18 0,0 1,97.58 19L97.58,328.8A18,18 0,0 1,79.58 346.8L20,346.8A18,18 0,0 1,2 328.8L2,19A18,18 0,0 1,20 1z"/>
+    <path android:fillColor="#fefefe" android:pathData="M27,6L73.613,6A18,18 0,0 1,91.613 24L91.613,323.801A18,18 0,0 1,73.613 341.801L27,341.801A18,18 0,0 1,9 323.801L9,24A18,18 0,0 1,27 6z"/>
+    <path android:fillColor="#ed3237" android:pathData="M27,21L71.65,21A3,3 0,0 1,74.65 24L74.65,39.45A3,3 0,0 1,71.65 42.45L27,42.45A3,3 0,0 1,24 39.45L24,24A3,3 0,0 1,27 21z"/>
+    <path android:fillType="evenOdd" android:pathData="M26.399,21L72.251,21a2.431,2.431 0,0 1,2.4 2.427L74.651,40.02a2.4,2.4 0,0 1,-2.4 2.427L26.399,42.447a2.4,2.4 0,0 1,-2.4 -2.427v-16.6a2.431,2.431 0,0 1,2.4 -2.427Z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:endX="51.351463" android:endY="31.72001"
+                android:startX="23.994226" android:startY="31.72001" android:type="linear">
+                <item android:color="#FF8F2B2C" android:offset="0"/>
+                <item android:color="#00481616" android:offset="1"/>
+            </gradient>
+        </aapt:attr>
+    </path>
+    <path android:fillColor="#fefefe" android:pathData="M36.683,32.181a5.459,5.459 0,0 0,1 3.5,3.391 3.391,0 0,0 2.8,1.248 3.438,3.438 0,0 0,2.83 -1.248,5.424 5.424,0 0,0 1.011,-3.5 5.424,5.424 0,0 0,-1.011 -3.5,3.438 3.438,0 0,0 -2.83,-1.248 3.4,3.4 0,0 0,-2.8 1.243A5.456,5.456 0,0 0,36.683 32.181ZM33.816,32.181a7.419,7.419 0,0 1,1.8 -5.256,6.318 6.318,0 0,1 4.866,-1.944 6.34,6.34 0,0 1,4.875 1.948,7.4 7.4,0 0,1 1.814,5.251 7.4,7.4 0,0 1,-1.814 5.251A6.34,6.34 0,0 1,40.487 39.38,6.31 6.31,0 0,1 35.621,37.432 7.423,7.423 0,0 1,33.816 32.181ZM48.066,40.763 L52.666,24.982h1.271L49.319,40.763ZM60.684,39L60.684,25.334h2.7L63.384,39Z"/>
+</vector>
