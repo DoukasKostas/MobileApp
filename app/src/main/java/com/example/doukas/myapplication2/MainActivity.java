@@ -2,6 +2,7 @@ package com.example.doukas.myapplication2;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -26,7 +27,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -101,25 +104,44 @@ public class MainActivity extends AppCompatActivity {
 
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());//get prefs
                     String myIp = prefs.getString("MYIPADDRESS", "defaultStringIfNothingFound");
+                    String pass =  prefs.getString("PASS","defaultStringIfNothingFound");
+                    if (pass.equals("")) pass="null";
                     client=new Socket(myIp,port);
 //                    SocketAddress server = new InetSocketAddress(myIp,port);
-
+//
 //                    client.connect(server);
 
                     in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 //                    System.out.println("Message Received: " + in.readLine());
 //                    changeStatus(stat,in.readLine());
 //                    printWriter = new PrintWriter(client.getOutputStream(),true);
+                    printWriter = new PrintWriter(client.getOutputStream(),true);
+                    printWriter.print(pass);
+                    printWriter.flush();
+                    String s0 = in.readLine();
+                    if(!s0.equals("Connected")){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(MainActivity.this, "Wrong Password! Try again.",
+                                        Toast.LENGTH_LONG).show();
+
+                            }
+                        });
+                        client.close();
+                        MainActivity.super.finish();
+                    }
 
                     while (client.isConnected() && !client.isClosed() && isNetworkConnected()) {
 
 
                             try {
+
                                 final String s = in.readLine();
 
-                                System.out.println("printed in continious thread" + s);
+
                                 if (s!=null && s.length() == 4) {
-                                    System.out.println("printed in continious thread" + s);
+
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -130,7 +152,11 @@ public class MainActivity extends AppCompatActivity {
                                             }
                                         }
                                     });
-                                } else {
+                                } else if (s.equals("")){
+                                    Toast.makeText(MainActivity.this, "Not Iniatialized properly. Try reconnecting.",
+                                            Toast.LENGTH_LONG).show();
+                                }
+                                else{
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -149,8 +175,19 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
 
+
                 }
                 catch (Exception e){
+                    if(client==null){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(MainActivity.this, "Unable to connect to server. Try again",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        });
+                                MainActivity.super.finish();
+                    }
                     e.printStackTrace();
                 }
             }
@@ -191,9 +228,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(!client.isClosed()){
-            new endSocket().execute();
+        if(client!=null){
+            if(!client.isClosed()){
+                new endSocket().execute();
+            }
         }
+    }
+    private void backToLoginActivity(){
+        Intent i = new Intent(MainActivity.this,LoginActivity.class);
+        startActivity(i);
     }
 
     private void changeStatus(Button[] b,ImageView[] priza,ImageView[] keraynos, String m){

@@ -18,9 +18,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,16 +60,22 @@ public class LoginActivity extends AppCompatActivity {
         ipaddress.setText(myIp);
         password=findViewById(R.id.passwordfield);
         loginbtn=findViewById(R.id.loginbtn);
-//        TextView logo = (TextView) findViewById(R.id.logoStroke);
-//        logo.getPaint().setStrokeWidth(20);
-//        logo.getPaint().setStyle(Paint.Style.STROKE);
+        ImageView logo = (ImageView) findViewById(R.id.Logo);
+        LinearLayout div= (LinearLayout) findViewById(R.id.loginDiv);
+        Animation fromTop = AnimationUtils.loadAnimation(this,R.anim.fromtop);
+        logo.setAnimation(fromTop);
+        Animation fromBot = AnimationUtils.loadAnimation(this,R.anim.frombot);
+        div.setAnimation(fromBot);
+
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
                 String ip=ipaddress.getText().toString();
+                String pass=password.getText().toString();
                 SharedPreferences.Editor prefEditor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();//edit prefs
                 prefEditor.putString("MYIPADDRESS", ip);//edit prefs
+                prefEditor.putString("PASS",pass);
                 prefEditor.apply();//edit prefs
                 /*new Thread(new Runnable() {
                     @Override
@@ -132,6 +142,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());//get prefs
         String myIp = prefs.getString("MYIPADDRESS", "defaultStringIfNothingFound");//get prefs
         String myEmail = prefs.getString("MYEMAIL", "defaultStringIfNothingFound");//get prefs
+        String pass = prefs.getString("PASS", "defaultStringIfNothingFound");//get prefs
         //Toast.makeText(LoginActivity.this,myEmail+" connected to:"+myIp
         //        , Toast.LENGTH_LONG).show();//gia debug
 
