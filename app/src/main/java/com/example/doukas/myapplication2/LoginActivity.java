@@ -18,6 +18,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -41,6 +43,11 @@ public class LoginActivity extends AppCompatActivity {
     EditText ipaddress;
     EditText password;
     Button loginbtn;
+    Button externalbtn;
+    Button localbtn;
+    LinearLayout loginlayout;
+    LinearLayout logdiv;
+    LinearLayout btndiv;
     private int port = 8888;
     private Socket client;
     private PrintWriter printWriter;
@@ -60,13 +67,42 @@ public class LoginActivity extends AppCompatActivity {
         ipaddress.setText(myIp);
         password=findViewById(R.id.passwordfield);
         loginbtn=findViewById(R.id.loginbtn);
+        externalbtn=findViewById(R.id.externalconbtn);
+        localbtn=findViewById(R.id.localconbtn);
         ImageView logo = (ImageView) findViewById(R.id.Logo);
-        LinearLayout div= (LinearLayout) findViewById(R.id.loginDiv);
+        logdiv= (LinearLayout) findViewById(R.id.loginDiv);
+        btndiv= (LinearLayout) findViewById(R.id.buttonLayout);
+        logdiv.setVisibility(View.GONE);
         Animation fromTop = AnimationUtils.loadAnimation(this,R.anim.fromtop);
         logo.setAnimation(fromTop);
         Animation fromBot = AnimationUtils.loadAnimation(this,R.anim.frombot);
-        div.setAnimation(fromBot);
+        btndiv.setAnimation(fromBot);
 
+        localbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                SharedPreferences.Editor prefEditor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();//edit prefs
+                prefEditor.putString("MYIPADDRESS", "192.168.1.120");//edit prefs
+                prefEditor.apply();//edit prefs
+                if(isNetworkConnected())
+                    presentActivity(view);
+                else
+                    Toast.makeText(LoginActivity.this, "No Connection. Open wifi or data to connect",
+                            Toast.LENGTH_LONG).show();
+            }
+        });
+
+        externalbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                Animation Fadeout = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_out);
+                Animation Fadein = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
+                btndiv.startAnimation(Fadeout);
+                btndiv.setVisibility(View.GONE);
+                logdiv.startAnimation(Fadein);
+                logdiv.setVisibility(View.VISIBLE);
+            }
+        });
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
