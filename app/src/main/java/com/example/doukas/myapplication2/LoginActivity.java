@@ -69,9 +69,9 @@ public class LoginActivity extends AppCompatActivity {
         loginbtn=findViewById(R.id.loginbtn);
         externalbtn=findViewById(R.id.externalconbtn);
         localbtn=findViewById(R.id.localconbtn);
-        ImageView logo = (ImageView) findViewById(R.id.Logo);
-        logdiv= (LinearLayout) findViewById(R.id.loginDiv);
-        btndiv= (LinearLayout) findViewById(R.id.buttonLayout);
+        ImageView logo = findViewById(R.id.Logo);
+        logdiv= findViewById(R.id.loginDiv);
+        btndiv= findViewById(R.id.buttonLayout);
         logdiv.setVisibility(View.GONE);
         Animation fromTop = AnimationUtils.loadAnimation(this,R.anim.fromtop);
         logo.setAnimation(fromTop);
@@ -140,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(isNetworkConnected())
                     presentActivity(view);
                 else
-                    Toast.makeText(LoginActivity.this, "No Connection. Open wifi or data to connect",
+                    Toast.makeText(LoginActivity.this, R.string.no_internet_connection,
                             Toast.LENGTH_LONG).show();
             }
         });
@@ -233,6 +233,9 @@ public class LoginActivity extends AppCompatActivity {
                     toast.show();
                 }
                 else{
+                    if(isNetworkConnected()) {
+
+
                     SharedPreferences.Editor prefEditor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();//edit prefs
                     e="Email:"+e;
                     prefEditor.putString("MYEMAIL", e);//edit prefs
@@ -247,15 +250,44 @@ public class LoginActivity extends AppCompatActivity {
                                 SocketAddress server = new InetSocketAddress("192.168.1.120",port);
                                 client.connect(server);
                                 printWriter = new PrintWriter(client.getOutputStream(),true);
+                                BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
                                 printWriter.print(myEmail);
                                 printWriter.flush();
+
+                                in.readLine();
+                                in.readLine();
+                                final String s=in.readLine();
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(),s, Toast.LENGTH_LONG).show();
+                                    }
+                                });
+
+
+                                printWriter = new PrintWriter(client.getOutputStream(),true);
+                                printWriter.print("off:");
+                                printWriter.flush();
+                                client.close();
                             }
                             catch (Exception e){
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(getApplicationContext(),R.string.unable_to_connect, Toast.LENGTH_LONG).show();
+                                    }
+                                });
+
                                 e.printStackTrace();
                             }
                         }
                     }).start();
                     dialog.dismiss();
+                    }
+                    else
+                        Toast.makeText(LoginActivity.this, R.string.no_internet_connection,
+                                Toast.LENGTH_LONG).show();
                 }
 
             }

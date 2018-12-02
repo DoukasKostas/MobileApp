@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private Socket client;
     private PrintWriter printWriter;
     private BufferedReader in;
-    private Dialog pd;
+    private Dialog pd,loadingSCon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +95,18 @@ public class MainActivity extends AppCompatActivity {
 //        sw2.setOnClickListener(new btnListener("2"));
 //        sw3.setOnClickListener(new btnListener("3"));
 //        sw4.setOnClickListener(new btnListener("4"));
-
+        loadingSCon = new Dialog(MainActivity.this, android.R.style.Theme_Black);
+        View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.remove_border, null);
+        loadingSCon.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        loadingSCon.getWindow().setBackgroundDrawableResource(R.color.transparent);
+        loadingSCon.setContentView(view);
+        loadingSCon.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                MainActivity.super.finish();
+            }
+        });
+        loadingSCon.show();
 
 
         new Thread(new Runnable() {
@@ -116,6 +128,15 @@ public class MainActivity extends AppCompatActivity {
 //                    changeStatus(stat,in.readLine());
 //                    printWriter = new PrintWriter(client.getOutputStream(),true);
                     printWriter = new PrintWriter(client.getOutputStream(),true);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(loadingSCon!=null){
+                                loadingSCon.hide();
+                                loadingSCon.dismiss();
+                            }
+                        }
+                    });
                     printWriter.print(pass);
                     printWriter.flush();
                     String s0 = in.readLine();
@@ -123,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(MainActivity.this, "Wrong Password! Try again.",
+                                Toast.makeText(MainActivity.this, R.string.wrong_password,
                                         Toast.LENGTH_LONG).show();
 
                             }
@@ -153,8 +174,13 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                     });
                                 } else if (s.equals("")){
-                                    Toast.makeText(MainActivity.this, "Not Iniatialized properly. Try reconnecting.",
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                        Toast.makeText(MainActivity.this, "Not Iniatialized properly. Try reconnecting.",
                                             Toast.LENGTH_LONG).show();
+                                        }
+                                    });
                                 }
                                 else{
                                     runOnUiThread(new Runnable() {
@@ -182,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(MainActivity.this, "Unable to connect to server. Try again",
+                                Toast.makeText(MainActivity.this, R.string.unable_to_connect,
                                         Toast.LENGTH_LONG).show();
                             }
                         });
@@ -262,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
     private class btnListener implements View.OnClickListener{
         String num;
 
-        public btnListener(String num) {
+        btnListener(String num) {
             this.num = num;
         }
 
