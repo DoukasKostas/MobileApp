@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login">Σύνδεση</string>
+    <string name="cancel">Άκυρο</string>
+    <string name="local_connection">Τοπική\nΣύνδεση</string>
+    <string name="external_connection">Απομακρυσμένη\nΣύνδεση</string>
+    <string name="wrong_password">Λάθος κωδικός! Προσπαθήστε ξανά.</string>
+    <string name="no_internet_connection">Αδυναμία σύνδεσης. Ανοίξτε wifi ή δεδομένα για να συνδεθείται</string>
+    <string name="unable_to_connect">Δεν είναι δυνατή η σύνδεση με τον server. Προσπαθήστε ξανά</string>
+    <string name="only_on_local_connection">(Μόνο με τοπική σύνδεση)</string>
+    <string name="ip_address">Διεύθυνση IP</string>
+    <string name="password">Κωδικός πρόσβασης</string>
+    <string name="confirm">Επιβεβαίωση</string>
+    <string name="action_settings">Ορισμός Email</string>
+</resources>

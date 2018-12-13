@@ -63,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         Toolbar toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         ipaddress=findViewById(R.id.ipaddressfield);
         ipaddress.setText(myIp);
         password=findViewById(R.id.passwordfield);
@@ -113,30 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                 prefEditor.putString("MYIPADDRESS", ip);//edit prefs
                 prefEditor.putString("PASS",pass);
                 prefEditor.apply();//edit prefs
-                /*new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
 
-                            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);//get prefs
-                            String myIp = prefs.getString("MYIPADDRESS", "defaultStringIfNothingFound");
-                            client=new Socket();
-                            SocketAddress server = new InetSocketAddress(myIp,port);
-                            client.connect(server);
-                            BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-                            String message = null;
-                            try {
-                                message = in.readLine();
-                                if(message=="Connected")presentActivity(view);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        catch (Exception e){
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();*/
                 if(isNetworkConnected())
                     presentActivity(view);
                 else
@@ -179,8 +157,6 @@ public class LoginActivity extends AppCompatActivity {
         String myIp = prefs.getString("MYIPADDRESS", "defaultStringIfNothingFound");//get prefs
         String myEmail = prefs.getString("MYEMAIL", "defaultStringIfNothingFound");//get prefs
         String pass = prefs.getString("PASS", "defaultStringIfNothingFound");//get prefs
-        //Toast.makeText(LoginActivity.this,myEmail+" connected to:"+myIp
-        //        , Toast.LENGTH_LONG).show();//gia debug
 
         ActivityCompat.startActivity(this, intent, options.toBundle());
     }

@@ -50,10 +50,6 @@ public class MainActivity extends AppCompatActivity {
     private Button[] sw=new Button[4];
     private ImageView[] priza = new ImageView[4];
     private ImageView[] keraynos = new ImageView[4];
-//    private Button sw1;
-//    private Button sw2;
-//    private Button sw3;
-//    private Button sw4;
     private TextView[] stat=new TextView[4];
     private int port = 8888;
     private Socket client;
@@ -83,18 +79,7 @@ public class MainActivity extends AppCompatActivity {
         sw[1].setOnClickListener(new btnListener("2"));
         sw[2].setOnClickListener(new btnListener("3"));
         sw[3].setOnClickListener(new btnListener("4"));
-//        sw1=findViewById(R.id.switch1);
-//        sw2=findViewById(R.id.switch2);
-//        sw3=findViewById(R.id.switch3);
-//        sw4=findViewById(R.id.switch4);
-//        stat[0]=findViewById(R.id.status1);
-//        stat[1]=findViewById(R.id.status2);
-//        stat[2]=findViewById(R.id.status3);
-//        stat[3]=findViewById(R.id.status4);
-//        sw1.setOnClickListener(new btnListener("1"));
-//        sw2.setOnClickListener(new btnListener("2"));
-//        sw3.setOnClickListener(new btnListener("3"));
-//        sw4.setOnClickListener(new btnListener("4"));
+
         loadingSCon = new Dialog(MainActivity.this, android.R.style.Theme_Black);
         View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.remove_border, null);
         loadingSCon.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -119,14 +104,8 @@ public class MainActivity extends AppCompatActivity {
                     String pass =  prefs.getString("PASS","defaultStringIfNothingFound");
                     if (pass.equals("")) pass="null";
                     client=new Socket(myIp,port);
-//                    SocketAddress server = new InetSocketAddress(myIp,port);
-//
-//                    client.connect(server);
 
                     in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-//                    System.out.println("Message Received: " + in.readLine());
-//                    changeStatus(stat,in.readLine());
-//                    printWriter = new PrintWriter(client.getOutputStream(),true);
                     printWriter = new PrintWriter(client.getOutputStream(),true);
                     runOnUiThread(new Runnable() {
                         @Override
@@ -244,12 +223,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
 
-//    protected void onStop() {
-//        super.onStop();
-//        new endSocket().execute();
-//    }
 
     @Override
     protected void onDestroy() {
@@ -364,21 +338,13 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-//            String message = null;
-//            try {
-//                in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-//                message = in.readLine();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            return message;
+
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-           // printWriter.close();
         }
     }
 
@@ -395,14 +361,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-//            String message = null;
-//            try {
-//                in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-//                message = in.readLine();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            return message;
+
             return null;
         }
 
