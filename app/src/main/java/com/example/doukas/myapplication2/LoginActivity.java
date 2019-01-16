@@ -114,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                     presentActivity(view);//presents next activity
                 else
                     //toast for error message
-                    Toast.makeText(LoginActivity.this, "No Connection. Open wifi or data to connect",
+                    Toast.makeText(LoginActivity.this, R.string.no_internet_connection,
                             Toast.LENGTH_LONG).show();
             }
         });
