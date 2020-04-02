@@ -1,20 +1,20 @@
 <resources>
-    <string name="app_name">My Application2</string>
+    <string name="app_name" translatable="false">SmartTaPanda</string>
     <string name="action_settings">Set Mail</string>
-    <string name="priza_1">Priza 1</string>
-    <string name="status">Status:</string>
-    <string name="on">On</string>
-    <string name="switchLb">Switch</string>
-    <string name="priza_2">Priza 2</string>
-    <string name="off">Off</string>
-    <string name="priza_4">Priza 4</string>
-    <string name="set_email">Set Email</string>
-    <string name="email">Email</string>
+    <string name="priza_1" translatable="false">Priza 1</string>
+    <string name="priza_2" translatable="false">Priza 2</string>
+    <string name="priza_4" translatable="false">Priza 4</string>
+    <string name="priza_3" translatable="false">Priza 3</string>
+    <string name="email" translatable="false">Email</string>
     <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
-    <string name="priza_3">Priza 3</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="ip_address">Ip Address</string>
-    <string name="smarttapanda">SmartTaPanda</string>
+    <string name="only_on_local_connection">(Only on local connection)</string>
+    <string name="unable_to_connect">Unable to connect to server. Try again</string>
+    <string name="no_internet_connection">No Connection. Open wifi or data to connect</string>
+    <string name="wrong_password">Wrong Password! Try again.</string>
+    <string name="local_connection">Local Connection</string>
+    <string name="external_connection">External Connection</string>
 </resources>

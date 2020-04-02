@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="btn_txt_size">10sp</dimen>
+    <dimen name="set_mail">22sp</dimen>
+    <dimen name="only_on_lconn">12sp</dimen>
+</resources>

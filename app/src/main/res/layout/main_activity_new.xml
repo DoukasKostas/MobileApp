@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainactivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="104dp"
+            android:layout_height="420dp"
+            android:orientation="vertical"
+            android:background="@drawable/ic_powerstrip"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:id="@+id/priza1"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:src="@drawable/ic_off"
+                android:layout_marginTop="64dp"
+                />
+            <ImageView
+                android:id="@+id/k1"
+                android:layout_width="18dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="-10dp"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_keraynos"
+                android:visibility="invisible"
+                />
+            <ImageView
+                android:id="@+id/priza2"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_onk"
+                />
+
+            <ImageView
+                android:id="@+id/k2"
+                android:layout_width="18dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="-10dp"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_keraynos"
+                />
+
+            <ImageView
+                android:id="@+id/priza3"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:src="@drawable/ic_onk"
+                android:layout_marginTop="8dp"
+                />
+
+            <ImageView
+                android:id="@+id/k3"
+                android:layout_width="18dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="-10dp"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_keraynos"
+                />
+
+            <ImageView
+                android:id="@+id/priza4"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:src="@drawable/ic_off"
+                android:layout_marginTop="8dp"
+                />
+
+            <ImageView
+                android:id="@+id/k4"
+                android:layout_width="18dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="-10dp"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_keraynos"
+                android:visibility="invisible"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/switch1"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/switch_btn_on"
+                />
+
+            <Button
+                android:id="@+id/switch2"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/switch_btn_off"
+                />
+
+            <Button
+                android:id="@+id/switch3"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/switch_btn_on"
+                />
+
+            <Button
+                android:id="@+id/switch4"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/switch_btn_on"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="94dp"
+                android:layout_marginBottom="10dp"
+
+                android:gravity="center_vertical"
+                android:maxEms="6"
+                android:minEms="6"
+                android:text="@string/priza_1"
+                android:textColor="@color/SwitchesText"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="94dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical"
+                android:maxEms="6"
+                android:minEms="6"
+                android:text="@string/priza_2"
+                android:textColor="@color/SwitchesText"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="94dp"
+
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical"
+                android:maxEms="6"
+                android:minEms="6"
+                android:text="@string/priza_3"
+                android:textColor="@color/SwitchesText"
+                android:textSize="25sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="94dp"
+
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical"
+                android:maxEms="6"
+                android:minEms="6"
+                android:text="@string/priza_4"
+                android:textColor="@color/SwitchesText"
+                android:textSize="25sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="16dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="42dp" />
+
+
+</android.support.constraint.ConstraintLayout>
